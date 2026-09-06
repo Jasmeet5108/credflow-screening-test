@@ -4,10 +4,8 @@ import { connectDB } from "@/lib/mongoDB";
 import { Deployment } from "@/models/deployment";
 import { shouldMarkDeploymentReady } from "@/lib/deployment";
 
-const PROVISIONING_TIME_MS = 10_000;
-
 export async function GET(
-  request: Request,
+  _request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
@@ -66,7 +64,10 @@ export async function GET(
   }
 }
 
-export async function DELETE({ params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
     await connectDB();
 

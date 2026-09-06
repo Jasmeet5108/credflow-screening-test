@@ -272,9 +272,9 @@ This makes setup fast and keeps the project easy to evaluate while still maintai
 
 I used AI assistance during development for:
 
+- UI to style sections
 - Discussing implementation approaches
 - Reviewing architecture and trade-offs
-- Helping debug development issues
 - Suggesting test cases
 - Reviewing README wording
 

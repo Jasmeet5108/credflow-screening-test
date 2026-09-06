@@ -82,6 +82,10 @@ export default function Usage() {
     }
 
     fetchDeployments();
+
+    const interval = setInterval(fetchDeployments, 2000);
+
+    return () => clearInterval(interval);
   }, []);
 
   async function fetchUsage() {

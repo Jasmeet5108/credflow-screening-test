@@ -25,41 +25,41 @@ export default function Playground() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function fetchDeployments() {
-      try {
-        const response = await fetch("/api/deployments");
+  const fetchDeployments = async () => {
+    try {
+      const response = await fetch("/api/deployments");
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch deployments.");
-        }
-
-        const data: Deployment[] = await response.json();
-
-        const readyDeployments = data.filter(
-          (deployment) => deployment.status === "ready",
-        );
-
-        setDeployments(readyDeployments);
-
-        if (readyDeployments.length > 0) {
-          setSelectedDeploymentId((current) => {
-            const stillExists = readyDeployments.some(
-              (deployment) => deployment.deployment_id === current,
-            );
-
-            return stillExists ? current : readyDeployments[0].deployment_id;
-          });
-        } else {
-          setSelectedDeploymentId("");
-        }
-      } catch (error) {
-        setError(
-          error instanceof Error ? error.message : "Something went wrong.",
-        );
+      if (!response.ok) {
+        throw new Error("Failed to fetch deployments.");
       }
-    }
 
+      const data: Deployment[] = await response.json();
+
+      const readyDeployments = data.filter(
+        (deployment) => deployment.status === "ready",
+      );
+
+      setDeployments(readyDeployments);
+
+      if (readyDeployments.length > 0) {
+        setSelectedDeploymentId((current) => {
+          const stillExists = readyDeployments.some(
+            (deployment) => deployment.deployment_id === current,
+          );
+
+          return stillExists ? current : readyDeployments[0].deployment_id;
+        });
+      } else {
+        setSelectedDeploymentId("");
+      }
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Something went wrong.",
+      );
+    }
+  };
+
+  useEffect(() => {
     fetchDeployments();
 
     const interval = setInterval(fetchDeployments, 2000);
@@ -67,7 +67,7 @@ export default function Playground() {
     return () => clearInterval(interval);
   }, []);
 
-  async function sendPrompt() {
+  const sendPrompt = async () => {
     if (!selectedDeploymentId) {
       setError("Please select a ready deployment.");
       return;
@@ -122,7 +122,7 @@ export default function Playground() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <section className="rounded-2xl border border-zinc-200 p-6 shadow-sm">
@@ -130,16 +130,16 @@ export default function Playground() {
       <div className="mb-6">
         <h2 className="text-2xl font-semibold text-zinc-300">Playground</h2>
 
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="mt-1 text-sm text-zinc-400">
           Send a prompt to one of your ready deployments.
         </p>
       </div>
 
       {deployments.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center">
-          <p className="font-medium text-zinc-700">No ready deployments</p>
+        <div className="rounded-xl border border-dashed border-zinc-300 bg-zinc-900 p-8 text-center">
+          <p className="font-medium text-zinc-300">No ready deployments</p>
 
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-zinc-400">
             Create a deployment and wait for it to finish provisioning.
           </p>
         </div>

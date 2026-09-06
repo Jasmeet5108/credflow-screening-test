@@ -2,10 +2,7 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { connectDB } from "@/lib/mongoDB";
 import { Deployment } from "@/models/deployment";
-import {
-  PROVISIONING_TIME_MS,
-  shouldMarkDeploymentReady,
-} from "@/lib/deployment";
+import { shouldMarkDeploymentReady } from "@/lib/deployment";
 
 export async function POST(request: Request) {
   try {

@@ -20,7 +20,7 @@ export default function Deployments() {
     null,
   );
 
-  async function fetchDeployments() {
+  const fetchDeployments = async () => {
     try {
       const response = await fetch("/api/deployments");
 
@@ -36,7 +36,7 @@ export default function Deployments() {
         error instanceof Error ? error.message : "Something went wrong.",
       );
     }
-  }
+  };
 
   useEffect(() => {
     fetchDeployments();
@@ -48,7 +48,7 @@ export default function Deployments() {
     return () => clearInterval(interval);
   }, []);
 
-  async function createDeployment() {
+  const createDeployment = async () => {
     try {
       setLoading(true);
       setError("");
@@ -75,7 +75,7 @@ export default function Deployments() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   async function terminateDeployment(id: string) {
     try {
